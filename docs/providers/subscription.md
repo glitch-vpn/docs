@@ -10,9 +10,9 @@ everything else from the response headers, and re-fetches on an interval.
 | VLESS | `vless://` | xray, mihomo |
 | Trojan | `trojan://` | xray, mihomo |
 | Shadowsocks | `ss://` | xray, mihomo |
-| Hysteria2 | `hysteria2://`, `hy2://` | mihomo only |
-| AmneziaWG | `awg://`, or a raw `.conf` in the body | its own engine |
-| WireGuard | a raw `.conf` in the body | its own engine |
+| Hysteria2 | `hysteria2://`, `hy2://` | mihomo |
+| AmneziaWG | `awg://`, or a raw `.conf` in the body | awg, mihomo |
+| WireGuard | a raw `.conf` in the body | awg, mihomo |
 
 **Not supported:** `vmess://`, `socks://`, `socks5://`, `http://` proxies, `ssr://`, `tuic://`,
 `hysteria://` (version 1 — only Hysteria 2 is carried), and `wireguard://`. A WireGuard config arrives as a
@@ -21,15 +21,25 @@ everything else from the response headers, and re-fetches on an interval.
 An unsupported line is reported to the user as a skipped entry, and the rest of the subscription
 loads normally.
 
-### One Hysteria2 entry changes the engine for the whole subscription
+### What you mix decides which engine runs the whole subscription
 
-A subscription's servers connect as one group, and a group runs on one engine: the one that can carry
-every protocol in it. Hysteria2 is carried only by mihomo, so mixing VLESS with a single Hysteria2
-server moves **all** of it from xray to mihomo.
+A subscription's servers connect as one group, and a group runs on one engine: the one that carries
+every protocol in it. Only VLESS, Trojan and Shadowsocks run on xray. Everything else runs on mihomo,
+which carries those three as well.
 
-The engines accept different options: `mux` and `xudp` are xray-only, and the available uTLS
-fingerprints and balancer strategies differ. If your VLESS servers are tuned for xray, serve
-Hysteria2 as a separate subscription.
+So a single Hysteria2, WireGuard or AmneziaWG entry moves **all** the servers in that subscription from
+xray to mihomo. The two accept different options: `mux` and `xudp` are xray-only, and the available uTLS
+fingerprints and balancer strategies differ. If your VLESS servers are tuned for xray, serve the others
+as a separate subscription.
+
+### The awg engine is chosen only if the user asks for it
+
+WireGuard and AmneziaWG are carried by two engines: mihomo and a dedicated awg engine. The client picks
+mihomo for them, because the awg engine is a plain L3 tunnel that ignores routing rules and takes a
+single plain DNS resolver — mihomo carries the same links with both intact.
+
+The user can pin the awg engine in settings. If they do, your routing profile and DNS settings have no
+effect for that connection. Nothing you send changes this either way; it is their switch.
 
 ## Body formats
 
