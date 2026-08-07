@@ -1,0 +1,55 @@
+/* Brand colours on Material's own hooks. Everything else is stock theme. */
+
+[data-md-color-scheme='slate'] {
+  --md-default-bg-color: #000000;
+  --md-default-bg-color--light: #171717;
+  --md-default-bg-color--lighter: #1e1e1e;
+  --md-default-bg-color--lightest: #282828;
+
+  --md-default-fg-color: #fefef1;
+  --md-default-fg-color--light: #d5d5c9;
+  --md-default-fg-color--lighter: #b4b2ab;
+  --md-default-fg-color--lightest: #3a3a3a;
+
+  --md-primary-fg-color: #171717;
+  --md-primary-bg-color: #fefef1;
+  --md-accent-fg-color: #ffc43d;
+  --md-typeset-a-color: #27c8f7;
+
+  --md-code-bg-color: #171717;
+  --md-code-fg-color: #fefef1;
+}
+
+/* The theme styles its content buttons as links, so a <button> in that slot gets
+   no colour and no hover. These four rules give the Copy button the same
+   behaviour as the edit and view icons beside it. */
+.md-typeset button.md-content__button {
+  background: none;
+  border: 0;
+  color: var(--md-typeset-a-color);
+  cursor: pointer;
+}
+.md-typeset button.md-content__button:hover,
+.md-typeset button.md-content__button:focus-visible {
+  color: var(--md-accent-fg-color);
+}
+.md-typeset button.md-content__button:active {
+  transform: translateY(1px);
+}
+
+/* Light Neutral. The brand blue washes out on white, which is why the app
+   carries a second one for its light palettes. */
+[data-md-color-scheme='default'] {
+  --md-default-bg-color: #ffffff;
+  --md-default-fg-color: #0a0a0a;
+  --md-default-fg-color--light: #3d3d3d;
+  --md-default-fg-color--lighter: #6b6b6b;
+  --md-default-fg-color--lightest: #cfcfcf;
+
+  --md-primary-fg-color: #0a0a0a;
+  --md-primary-bg-color: #ffffff;
+  --md-accent-fg-color: #b8860b;
+  --md-typeset-a-color: #1f9cea;
+
+  --md-code-bg-color: #f7f7f7;
+}

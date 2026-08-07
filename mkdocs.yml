@@ -1,0 +1,84 @@
+site_name: Glitch VPN
+site_description: Documentation for Glitch VPN, an open-source, local-first VPN client
+site_url: https://glitch-vpn.github.io/docs/
+site_author: Glitch VPN
+
+repo_url: https://github.com/glitch-vpn/glitch
+repo_name: glitch-vpn/glitch
+
+# Absolute on purpose: an edit link is normally resolved against repo_url, which
+# here points at the client rather than at these pages. urljoin returns an
+# absolute second argument unchanged, so this sends Edit to the docs repository
+# while the header link stays on the client.
+edit_uri_template: https://github.com/glitch-vpn/docs/edit/main/docs/{path}
+
+theme:
+  name: material
+  language: en
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  palette:
+    # Dark first — it is the app's primary theme. Colours come from
+    # assets/glitch.css, so `primary`/`accent` stay unset here.
+    - scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light theme
+    - scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark theme
+  features:
+    # Section landing pages: a group in the nav can have its own index.md.
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - assets/glitch.css
+
+extra_javascript:
+  - assets/geo-slice.js
+  - assets/copy-page.js
+
+# Publishes each page's Markdown source beside its HTML for the Copy button.
+hooks:
+  - hooks/copy_source.py
+
+plugins:
+  - search
+
+# Every page is listed here on purpose: `mkdocs build --strict` fails on a page
+# that is not, which is what keeps a half-finished draft from being published.
+nav:
+  - Home: index.md
+  - For providers:
+      - providers/index.md
+      - Subscription format: providers/subscription.md
+      - Responses and errors: providers/responses.md
+      - Routing profiles: providers/routing.md
+      - Geo databases: providers/geo.md
+      - Deep links: providers/deep-links.md
+      - Identifying devices: providers/devices.md
