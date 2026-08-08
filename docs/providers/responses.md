@@ -7,7 +7,7 @@ the subscription's own schedule; a final one stops automatic retries.
 
 | Response | Client | User sees |
 |---|---|---|
-| `200` with a parseable body | Replaces the server list. Servers that disappeared are removed, new ones added, existing ones keep their ping history and favourites | The list, and the header's "updated" time |
+| `200` with a parseable body | Replaces the server list. Servers that disappeared are removed, new ones added, existing ones keep their ping history | The list, and the header's "updated" time |
 | `200` with entries the client cannot parse | Keeps every valid server, skips the rest | The valid servers, plus a note naming how many entries were skipped and why |
 | `304 Not Modified` | Keeps the current list | The "updated" time refreshes |
 
